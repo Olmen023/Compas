@@ -3,13 +3,13 @@
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -183,21 +183,18 @@ export function EventDialog({
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent 
-        side="bottom" 
-        className="sm:max-w-[500px] mx-auto"
-      >
-        <SheetHeader>
-          <SheetTitle>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>
             {event ? "Editar Evento" : "Nuevo Evento"}
-          </SheetTitle>
-          <SheetDescription>
+          </DialogTitle>
+          <DialogDescription>
             {event
               ? "Modifica los detalles del evento"
               : "Crea un nuevo evento en tu calendario"}
-          </SheetDescription>
-        </SheetHeader>
+          </DialogDescription>
+        </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Title */}
@@ -306,7 +303,7 @@ export function EventDialog({
             </div>
           )}
 
-          <SheetFooter className="flex justify-between">
+          <DialogFooter className="flex justify-between sm:justify-between">
             <div className="flex-1">
               {event && (
                 <Button
@@ -332,9 +329,9 @@ export function EventDialog({
                   : "Crear"}
               </Button>
             </div>
-          </SheetFooter>
+          </DialogFooter>
         </form>
-      </SheetContent>
-    </Sheet>
+      </DialogContent>
+    </Dialog>
   );
 }
