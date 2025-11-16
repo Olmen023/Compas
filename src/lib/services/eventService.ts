@@ -163,7 +163,7 @@ export async function createEvent(
   }
 
   console.log("✅ Event created with RPC:", data);
-  return data;
+  return data as Event;
 }
 
 /**
@@ -212,7 +212,7 @@ export async function updateEvent(
   }
 
   console.log("✅ Event updated with RPC:", data);
-  return data;
+  return data as Event;
 }
 
 /**

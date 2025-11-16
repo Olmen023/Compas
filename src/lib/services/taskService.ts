@@ -60,7 +60,7 @@ export async function createTask(task: TaskInsert): Promise<Task> {
     throw error;
   }
 
-  return data;
+  return data as Task;
 }
 
 // Update a task
