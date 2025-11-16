@@ -1,0 +1,247 @@
+.mobileNav {
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .mobileNav {
+    display: none;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--background);
+}
+
+.menuButton {
+  height: 2.25rem;
+  width: 2.25rem;
+}
+
+.menuIcon {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sheetContent {
+  width: 18rem;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1rem;
+}
+
+.sheetHeader {
+  text-align: left;
+}
+
+.headerTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logoIcon {
+  display: flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background-color: var(--primary);
+}
+
+.logoIconSvg {
+  height: 1.5rem;
+  width: 1.5rem;
+  color: var(--primary-foreground);
+}
+
+.logoText {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+
+.profileSection {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.profileCard {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: var(--muted);
+  padding: 0.75rem;
+}
+
+.profileAvatar {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.profileName {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profileEmail {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--muted-foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav {
+  flex: 1;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  transition-property: color, background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.navLinkActive {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.navLinkInactive {
+  color: var(--muted-foreground);
+}
+
+.navLinkInactive:hover {
+  background-color: var(--muted);
+  color: var(--foreground);
+}
+
+.navIcon {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.navIconActive {
+  color: var(--primary-foreground);
+}
+
+.logoutSection {
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.logoutButton {
+  width: 100%;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.logoutButton:hover {
+  color: var(--foreground);
+}
+
+.logoutIcon {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.centerSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.centerLogo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.centerLogoIcon {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background-color: var(--primary);
+}
+
+.centerLogoIconSvg {
+  height: 1.25rem;
+  width: 1.25rem;
+  color: var(--primary-foreground);
+}
+
+.centerLogoText {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+
+.headerAvatar {
+  height: 2rem;
+  width: 2rem;
+}
+
+.headerAvatarFallback {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 0.75rem;
+  line-height: 1rem;
+}

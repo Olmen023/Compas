@@ -49,9 +49,26 @@ lerna-debug.log*
 *.sw?
 .claude2
 
-# Claude Code
+# Claude Code - Archivos sensibles y de configuración
+.claude/
 .claude/*
-!.claude/session-log.md
+*.local.json
+*-summary.md
+CLAUDE-CODE-RULES.md
+
+# Archivos SQL de desarrollo (pueden contener estructura sensible)
+*.sql
+!supabase/migrations/*.sql
+
+# Documentos internos y de instrucciones
+INSTRUCCIONES-*.md
+*-INSTRUCCIONES.md
+QUICKSTART.md
+ONEDRIVE_FIX.md
+
+# Scripts de desarrollo (pueden contener configuración sensible)
+scripts/
+!scripts/README.md
 
 # Temporary and junk files
 nul

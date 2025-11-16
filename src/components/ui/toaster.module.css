@@ -1,0 +1,27 @@
+/* Toaster uses Sonner library which applies styles via classNames prop */
+/* These styles are applied through the toastOptions.classNames configuration */
+
+:global(.toaster) {
+  /* Global toaster styles if needed */
+}
+
+:global(.toast) {
+  background-color: var(--background);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+:global(.toast) :global(.description) {
+  color: var(--muted-foreground);
+}
+
+:global(.toast) :global(.actionButton) {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+:global(.toast) :global(.cancelButton) {
+  background-color: var(--muted);
+  color: var(--muted-foreground);
+}

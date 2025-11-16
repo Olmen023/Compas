@@ -1,0 +1,179 @@
+.sidebar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    display: flex;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 16rem;
+    flex-direction: column;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  background-color: var(--background);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.logoContainer {
+  display: flex;
+  height: 4rem;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logoIcon {
+  display: flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background-color: var(--primary);
+}
+
+.logoIconSvg {
+  height: 1.5rem;
+  width: 1.5rem;
+  color: var(--primary-foreground);
+}
+
+.logoText {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+
+.profileCard {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: var(--muted);
+  padding: 0.75rem;
+}
+
+.profileAvatar {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.profileName {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profileEmail {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--muted-foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.navList {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.navItems {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  transition-property: color, background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.navLinkActive {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.navLinkInactive {
+  color: var(--muted-foreground);
+}
+
+.navLinkInactive:hover {
+  background-color: var(--muted);
+  color: var(--foreground);
+}
+
+.navIcon {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.navIconActive {
+  color: var(--primary-foreground);
+}
+
+.logoutContainer {
+  margin-top: auto;
+}
+
+.logoutButton {
+  width: 100%;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.logoutButton:hover {
+  color: var(--foreground);
+}
+
+.logoutIcon {
+  height: 1.25rem;
+  width: 1.25rem;
+}

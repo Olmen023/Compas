@@ -1,0 +1,109 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.avatarSection {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.avatar {
+  height: 6rem;
+  width: 6rem;
+}
+
+.avatarFallback {
+  background-color: var(--color-primary);
+  color: white;
+  font-size: 1.5rem;
+}
+
+.uploadButton {
+  display: flex;
+  align-items: center;
+}
+
+.uploadIcon {
+  height: 1rem;
+  width: 1rem;
+  margin-right: 0.5rem;
+}
+
+.uploadHint {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.5rem;
+}
+
+.uploadHintDisabled {
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+  margin-top: 0.25rem;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.disabledInput {
+  background-color: #f9fafb;
+}
+
+.fieldHint {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.textarea {
+  display: flex;
+  min-height: 80px;
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid var(--color-input);
+  background-color: var(--color-background);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  ring-offset: var(--color-background);
+}
+
+.textarea:focus-visible {
+  outline: none;
+  ring: 2px;
+  ring-color: var(--color-ring);
+  ring-offset: 2px;
+}
+
+.textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.textarea::placeholder {
+  color: var(--color-muted-foreground);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.loadingIcon {
+  margin-right: 0.5rem;
+  height: 1rem;
+  width: 1rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

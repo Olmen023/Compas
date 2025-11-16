@@ -5,6 +5,7 @@ import { Calendar, dateFnsLocalizer, View } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import { es } from "date-fns/locale";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./CalendarView.css";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Plus, Filter } from "lucide-react";
@@ -18,6 +19,7 @@ import {
 import { createClient } from "@/lib/supabase/client";
 import { EventDialog } from "./EventDialog";
 import { TeamFilter } from "./TeamFilter";
+import styles from "./CalendarView.module.css";
 
 const locales = {
   es: es,
@@ -156,30 +158,64 @@ export function CalendarView() {
     setSelectedSlot(null);
   }, []);
 
+  // Componente personalizado adaptativo para todas las vistas
+  const EventComponent = ({ event }: { event: CalendarEventWithDates }) => {
+    // Para vistas de semana y día, mostrar título y descripción
+    if (view === "week" || view === "day") {
+      return (
+        <div style={{ padding: '2px 4px', height: '100%', overflow: 'hidden' }}>
+          <strong style={{ fontSize: '0.9em', display: 'block' }}>{event.title}</strong>
+          {event.description && (
+            <div style={{ fontSize: '0.75em', marginTop: '2px', opacity: 0.9 }}>
+              {event.description}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // Para vista mensual, mostrar tiempo y título
+    const startTime = format(event.start, "HH:mm", { locale: es });
+    const endTime = format(event.end, "HH:mm", { locale: es });
+
+    return (
+      <div className={styles.eventContainer}>
+        <div className={styles.eventTime}>
+          {startTime} - {endTime}
+        </div>
+        <div className={styles.eventTitle}>
+          {event.title}
+        </div>
+      </div>
+    );
+  };
+
   const eventStyleGetter = (event: CalendarEventWithDates) => {
-    // Colores vibrantes con gradientes para diferentes tipos de eventos
+    // Colores con mejor contraste y más brillantes
     const eventColors = {
-      team: "linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%)", // Púrpura a Rosa
-      personal: "linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%)", // Cyan a Azul
+      team: "#9333EA", // Púrpura vibrante
+      personal: "#0EA5E9", // Azul brillante
     };
 
     const style = {
       background: event.team_id ? eventColors.team : eventColors.personal,
-      borderRadius: "8px",
-      color: "white",
-      border: "none",
+      borderRadius: "6px",
+      color: "#FFFFFF",
+      border: "2px solid rgba(255, 255, 255, 0.3)",
       display: "block",
       fontWeight: "600",
+      boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+      padding: "2px",
     };
     return { style };
   };
 
   return (
-    <div className="space-y-6">
+    <div className={styles.container}>
       {/* Toolbar */}
-      <Card className="p-6 glass shadow-lg hover-lift">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+      <Card className={styles.toolbar + " glass shadow-lg hover-lift"}>
+        <div className={styles.toolbarContent}>
+          <div className={styles.toolbarLeft}>
             <Button
               onClick={() => setIsDialogOpen(true)}
               className="gradient-primary text-white font-semibold shadow-lg hover:shadow-xl transition-smooth hover:scale-105"
@@ -194,14 +230,14 @@ export function CalendarView() {
             />
           </div>
 
-          <div className="flex items-center gap-2 bg-muted/50 p-1 rounded-xl shadow-inner">
+          <div className={styles.toolbarRight}>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setView("month")}
-              className={`font-semibold transition-smooth ${
+              className={`${styles.viewButton} ${
                 view === "month"
-                  ? "gradient-primary text-white shadow-md"
+                  ? `gradient-primary text-white ${styles.viewButtonActive}`
                   : "hover:bg-muted"
               }`}
             >
@@ -211,9 +247,9 @@ export function CalendarView() {
               variant="ghost"
               size="sm"
               onClick={() => setView("week")}
-              className={`font-semibold transition-smooth ${
+              className={`${styles.viewButton} ${
                 view === "week"
-                  ? "gradient-primary text-white shadow-md"
+                  ? `gradient-primary text-white ${styles.viewButtonActive}`
                   : "hover:bg-muted"
               }`}
             >
@@ -223,9 +259,9 @@ export function CalendarView() {
               variant="ghost"
               size="sm"
               onClick={() => setView("day")}
-              className={`font-semibold transition-smooth ${
+              className={`${styles.viewButton} ${
                 view === "day"
-                  ? "gradient-primary text-white shadow-md"
+                  ? `gradient-primary text-white ${styles.viewButtonActive}`
                   : "hover:bg-muted"
               }`}
             >
@@ -236,44 +272,49 @@ export function CalendarView() {
       </Card>
 
       {/* Calendar */}
-      <Card className="p-6 glass shadow-xl">
+      <Card className={styles.calendarCard + " glass shadow-xl"}>
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center h-[600px] space-y-4">
-            <div className="w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
-            <p className="text-muted-foreground font-semibold text-lg">Cargando eventos...</p>
+          <div className={styles.loadingContainer}>
+            <div className={styles.spinner}></div>
+            <p className={styles.loadingText}>Cargando eventos...</p>
           </div>
         ) : (
-          <Calendar
-            localizer={localizer}
-            events={filteredEvents}
-            startAccessor="start"
-            endAccessor="end"
-            titleAccessor="title"
-            view={view}
-            onView={setView}
-            date={date}
-            onNavigate={setDate}
-            onSelectSlot={handleSelectSlot}
-            onSelectEvent={handleSelectEvent}
-            selectable
-            eventPropGetter={eventStyleGetter}
-            style={{ height: 600 }}
-            messages={{
-              next: "Siguiente",
-              previous: "Anterior",
-              today: "Hoy",
-              month: "Mes",
-              week: "Semana",
-              day: "Día",
-              agenda: "Agenda",
-              date: "Fecha",
-              time: "Hora",
-              event: "Evento",
-              noEventsInRange: "No hay eventos en este rango",
-              showMore: (total) => `+ Ver más (${total})`,
-            }}
-            culture="es"
-          />
+          <div className={styles.calendarWrapper + " calendar-container"}>
+            <Calendar
+              localizer={localizer}
+              events={filteredEvents}
+              startAccessor="start"
+              endAccessor="end"
+              titleAccessor="title"
+              view={view}
+              onView={setView}
+              date={date}
+              onNavigate={setDate}
+              onSelectSlot={handleSelectSlot}
+              onSelectEvent={handleSelectEvent}
+              selectable
+              eventPropGetter={eventStyleGetter}
+              components={{
+                event: EventComponent,
+              }}
+              style={{ height: 600 }}
+              messages={{
+                next: "Siguiente",
+                previous: "Anterior",
+                today: "Hoy",
+                month: "Mes",
+                week: "Semana",
+                day: "Día",
+                agenda: "Agenda",
+                date: "Fecha",
+                time: "Hora",
+                event: "Evento",
+                noEventsInRange: "No hay eventos en este rango",
+                showMore: (total) => `+ Ver más (${total})`,
+              }}
+              culture="es"
+            />
+          </div>
         )}
       </Card>
 

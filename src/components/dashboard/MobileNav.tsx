@@ -24,7 +24,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
+import styles from "./MobileNav.module.css";
 
 interface MobileNavProps {
   user: any;
@@ -73,48 +73,48 @@ export function MobileNav({ user, profile }: MobileNavProps) {
   };
 
   return (
-    <div className="sticky top-0 z-40 lg:hidden">
-      <div className="flex h-14 items-center gap-x-4 border-b border-border bg-[hsl(var(--sidebar))] px-4">
+    <div className={styles.mobileNav}>
+      <div className={styles.header}>
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button
               variant="ghost"
               size="icon"
-              className="p-2 hover:bg-[hsl(var(--sidebar-hover))] transition-all rounded-md"
+              className={styles.menuButton}
             >
-              <Menu className="h-5 w-5 text-foreground" aria-hidden="true" />
-              <span className="sr-only">Abrir menú</span>
+              <Menu className={styles.menuIcon} aria-hidden="true" />
+              <span className={styles.srOnly}>Abrir menú</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-64 p-0 bg-[hsl(var(--sidebar))]">
-            <div className="flex h-full flex-col">
+          <SheetContent side="left" className={styles.sheetContent}>
+            <div className={styles.contentWrapper}>
               {/* Header */}
-              <SheetHeader className="border-b border-border px-4 py-3">
-                <SheetTitle className="flex items-center space-x-2">
-                  <div className="p-1.5 bg-primary/20 rounded-md">
-                    <Compass className="h-4 w-4 text-primary" />
+              <SheetHeader className={styles.sheetHeader}>
+                <SheetTitle className={styles.headerTitle}>
+                  <div className={styles.logoIcon}>
+                    <Compass className={styles.logoIconSvg} />
                   </div>
-                  <span className="text-base font-semibold text-foreground">Compás</span>
+                  <span className={styles.logoText}>Compás</span>
                 </SheetTitle>
               </SheetHeader>
 
               {/* Perfil de usuario */}
-              <div className="px-4 py-3">
-                <div className="flex items-center space-x-3 px-2 py-2 hover:bg-[hsl(var(--sidebar-hover))] rounded-md transition-all">
-                  <Avatar className="h-8 w-8">
+              <div className={styles.profileSection}>
+                <div className={styles.profileCard}>
+                  <Avatar className={styles.profileAvatar}>
                     <AvatarImage
                       src={profile?.avatar_url}
                       alt={profile?.full_name}
                     />
-                    <AvatarFallback className="bg-primary text-white font-semibold text-xs">
+                    <AvatarFallback className={styles.logoIcon}>
                       {getInitials(profile?.full_name)}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">
+                  <div className={styles.profileInfo}>
+                    <p className={styles.profileName}>
                       {profile?.full_name || "Usuario"}
                     </p>
-                    <p className="text-xs text-muted-foreground truncate">
+                    <p className={styles.profileEmail}>
                       {user.email}
                     </p>
                   </div>
@@ -124,8 +124,8 @@ export function MobileNav({ user, profile }: MobileNavProps) {
               <Separator />
 
               {/* Navegación */}
-              <nav className="flex-1 px-4 py-3">
-                <ul role="list" className="space-y-0.5">
+              <nav className={styles.nav}>
+                <ul role="list" className={styles.navList}>
                   {navigationItems.map((item) => {
                     const isActive = pathname === item.href;
                     return (
@@ -133,18 +133,10 @@ export function MobileNav({ user, profile }: MobileNavProps) {
                         <Link
                           href={item.href}
                           onClick={() => setIsOpen(false)}
-                          className={cn(
-                            "group flex gap-x-2 rounded-md px-2 py-1.5 text-sm font-medium transition-all",
-                            isActive
-                              ? "bg-[hsl(var(--sidebar-active))] text-foreground"
-                              : "text-muted-foreground hover:bg-[hsl(var(--sidebar-hover))] hover:text-foreground"
-                          )}
+                          className={`${styles.navLink} ${isActive ? styles.navLinkActive : styles.navLinkInactive}`.trim()}
                         >
                           <item.icon
-                            className={cn(
-                              "h-4 w-4 shrink-0",
-                              isActive ? "text-foreground" : "text-muted-foreground"
-                            )}
+                            className={`${styles.navIcon} ${isActive ? styles.navIconActive : ''}`.trim()}
                             aria-hidden="true"
                           />
                           {item.name}
@@ -156,14 +148,14 @@ export function MobileNav({ user, profile }: MobileNavProps) {
               </nav>
 
               {/* Logout */}
-              <div className="border-t border-border p-4">
+              <div className={styles.logoutSection}>
                 <form action="/auth/signout" method="post">
                   <Button
                     type="submit"
                     variant="ghost"
-                    className="w-full justify-start text-muted-foreground hover:text-destructive hover:bg-[hsl(var(--sidebar-hover))] transition-all rounded-md font-medium h-8 px-2"
+                    className={styles.logoutButton}
                   >
-                    <LogOut className="h-4 w-4 mr-2" />
+                    <LogOut className={styles.logoutIcon} />
                     Cerrar Sesión
                   </Button>
                 </form>
@@ -173,21 +165,21 @@ export function MobileNav({ user, profile }: MobileNavProps) {
         </Sheet>
 
         {/* Logo en el centro para móvil */}
-        <div className="flex flex-1 justify-center">
-          <Link href="/dashboard" className="flex items-center space-x-2">
-            <div className="p-1.5 bg-primary/20 rounded-md">
-              <Compass className="h-4 w-4 text-primary" />
+        <div className={styles.centerSection}>
+          <Link href="/dashboard" className={styles.centerLogo}>
+            <div className={styles.centerLogoIcon}>
+              <Compass className={styles.centerLogoIconSvg} />
             </div>
-            <span className="text-base font-semibold text-foreground">
+            <span className={styles.centerLogoText}>
               Compás
             </span>
           </Link>
         </div>
 
         {/* Avatar en la derecha */}
-        <Avatar className="h-8 w-8">
+        <Avatar className={styles.headerAvatar}>
           <AvatarImage src={profile?.avatar_url} alt={profile?.full_name} />
-          <AvatarFallback className="bg-primary text-white text-xs font-semibold">
+          <AvatarFallback className={styles.headerAvatarFallback}>
             {getInitials(profile?.full_name)}
           </AvatarFallback>
         </Avatar>

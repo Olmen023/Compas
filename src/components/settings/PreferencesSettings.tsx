@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
+import styles from "./PreferencesSettings.module.css";
 
 interface PreferencesSettingsProps {
   profile: any;
@@ -23,7 +24,7 @@ export function PreferencesSettings({ profile }: PreferencesSettingsProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className={styles.container}>
       {/* Notificaciones */}
       <Card>
         <CardHeader>
@@ -32,11 +33,11 @@ export function PreferencesSettings({ profile }: PreferencesSettingsProps) {
             Configura cómo y cuándo quieres recibir notificaciones
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
+        <CardContent className={styles.cardContent}>
+          <div className={styles.settingsRow}>
+            <div className={styles.settingLabel}>
               <Label htmlFor="email-notifications">Notificaciones por email</Label>
-              <p className="text-sm text-gray-500">
+              <p className={styles.settingDescription}>
                 Recibe notificaciones en tu correo electrónico
               </p>
             </div>
@@ -47,10 +48,10 @@ export function PreferencesSettings({ profile }: PreferencesSettingsProps) {
             />
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
+          <div className={styles.settingsRow}>
+            <div className={styles.settingLabel}>
               <Label htmlFor="push-notifications">Notificaciones push</Label>
-              <p className="text-sm text-gray-500">
+              <p className={styles.settingDescription}>
                 Recibe notificaciones en tu navegador
               </p>
             </div>
@@ -71,11 +72,11 @@ export function PreferencesSettings({ profile }: PreferencesSettingsProps) {
             Gestiona tus recordatorios automáticos
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
+        <CardContent className={styles.cardContent}>
+          <div className={styles.settingsRow}>
+            <div className={styles.settingLabel}>
               <Label htmlFor="task-reminders">Recordatorios de tareas</Label>
-              <p className="text-sm text-gray-500">
+              <p className={styles.settingDescription}>
                 Te avisaremos cuando una tarea esté próxima a vencer
               </p>
             </div>
@@ -86,10 +87,10 @@ export function PreferencesSettings({ profile }: PreferencesSettingsProps) {
             />
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
+          <div className={styles.settingsRow}>
+            <div className={styles.settingLabel}>
               <Label htmlFor="event-reminders">Recordatorios de eventos</Label>
-              <p className="text-sm text-gray-500">
+              <p className={styles.settingDescription}>
                 Te avisaremos antes de que comience un evento
               </p>
             </div>
@@ -103,7 +104,7 @@ export function PreferencesSettings({ profile }: PreferencesSettingsProps) {
       </Card>
 
       {/* Botón de guardar */}
-      <div className="flex justify-end">
+      <div className={styles.actionsRow}>
         <Button onClick={handleSave}>
           Guardar preferencias
         </Button>

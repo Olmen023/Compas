@@ -22,10 +22,12 @@ export function TasksView({ userId, teams }: TasksViewProps) {
     setIsLoading(true);
     try {
       const data = await getTasks(userId);
-      setTasks(data);
+      // Filtrar solo las tareas personales (sin team_id)
+      const personalTasks = data.filter(task => task.team_id === null);
+      setTasks(personalTasks);
     } catch (error) {
       console.error("Error loading tasks:", error);
-      toast.error("Error al cargar las tareas");
+      toast.error("Error al cargar las tareas personales");
     } finally {
       setIsLoading(false);
     }
@@ -167,7 +169,7 @@ export function TasksView({ userId, teams }: TasksViewProps) {
           </div>
           <Button onClick={handleNewTask} size="sm">
             <Plus className="h-4 w-4 mr-2" />
-            Nueva tarea
+            Nueva Tarea Personal
           </Button>
         </div>
 

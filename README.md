@@ -8,13 +8,15 @@ Compás es una aplicación web progresiva (PWA) diseñada para ayudar a equipos 
 
 ## 🚀 Stack Tecnológico
 
-- **Frontend**: Next.js 14+ con App Router y TypeScript
-- **Estilos**: Tailwind CSS + shadcn/ui
+- **Frontend**: Next.js 16 con App Router y TypeScript
+- **Estilos**: CSS Modules + CSS Variables (migrado desde Tailwind)
+- **UI Components**: shadcn/ui (migrados a CSS Modules)
 - **Estado**: Zustand
 - **Validación**: React Hook Form + Zod
 - **Backend**: Supabase (PostgreSQL, Auth, Realtime)
-- **Hosting**: Vercel
-- **PWA**: Next.js PWA
+- **Calendario**: React Big Calendar
+- **Notificaciones**: Sonner
+- **PWA**: Manifest.json + Service Worker
 
 ## 📦 Instalación Local
 
@@ -102,9 +104,9 @@ compas/
 ## ✅ Progreso del Desarrollo
 
 ### Fase 1: Setup Inicial ✅ COMPLETADA
-- [x] Proyecto Next.js con TypeScript
-- [x] Tailwind CSS configurado
-- [x] shadcn/ui configurado
+- [x] Proyecto Next.js 16 con TypeScript
+- [x] CSS Modules configurado (migrado desde Tailwind)
+- [x] shadcn/ui migrado a CSS Modules
 - [x] Supabase configurado
 - [x] Zustand stores básicos
 - [x] Estructura de carpetas
@@ -120,44 +122,50 @@ compas/
 - [x] Middleware de autenticación
 - [x] Sistema de notificaciones (Toaster)
 
-### Fase 3: Dashboard y Navegación 🔄 SIGUIENTE
-- [ ] Layout completo con sidebar
-- [ ] Navegación móvil responsive
-- [ ] Página de configuración
-- [ ] Perfil de usuario editable
+### Fase 3: Dashboard y Navegación ✅ COMPLETADA
+- [x] Layout completo con sidebar (desktop + mobile)
+- [x] Navegación móvil responsive
+- [x] Página de configuración
+- [x] Perfil de usuario visualización
 
-### Fase 4: Calendario con CRUD ⏳ PENDIENTE
-- [ ] Integrar librería de calendario
-- [ ] CRUD de eventos
-- [ ] Vista mensual/semanal/diaria
-- [ ] Real-time updates
-- [ ] Filtros por equipo
+### Fase 4: Calendario con CRUD ✅ COMPLETADA
+- [x] Integrar React Big Calendar
+- [x] CRUD de eventos completo
+- [x] Vista mensual/semanal/diaria
+- [x] Real-time updates con Supabase
+- [x] Filtros por equipo/personal
+- [x] Colores mejorados para mejor contraste
+- [x] Mostrar nombre y horario de eventos
+- [x] Modal de creación/edición de eventos
 
-### Fase 5: Gestión de Tareas ⏳ PENDIENTE
-- [ ] Lista de tareas
-- [ ] Vista Kanban
-- [ ] CRUD completo
-- [ ] Asignación a miembros
-- [ ] Real-time updates
+### Fase 5: Gestión de Tareas ✅ COMPLETADA
+- [x] Lista de tareas con CRUD completo
+- [x] Estados y prioridades
+- [x] Filtros y búsqueda
+- [x] Real-time updates
+- [x] Asignación a equipos
 
-### Fase 6: Sistema de Equipos ⏳ PENDIENTE
-- [ ] Crear/editar equipos
-- [ ] Invitar miembros
-- [ ] Gestionar roles
-- [ ] Compartir calendarios y tareas
+### Fase 6: Sistema de Equipos ⏳ EN PROGRESO
+- [x] Estructura de base de datos
+- [x] Página de equipos básica
+- [ ] Crear/editar equipos (UI pendiente)
+- [ ] Invitar miembros (UI pendiente)
+- [ ] Gestionar roles (UI pendiente)
 
-### Fase 7: PWA ⏳ PENDIENTE
-- [ ] Manifest.json
-- [ ] Service Worker
-- [ ] Íconos
-- [ ] Instalación
+### Fase 7: PWA ✅ COMPLETADA
+- [x] Manifest.json configurado
+- [x] Íconos SVG generados
+- [x] Script generador de íconos PNG
+- [x] PWA instalable
+- [ ] Service Worker (opcional)
 
-### Fase 8: Polish y Deployment ⏳ PENDIENTE
-- [ ] Manejo de errores
-- [ ] Loading states
-- [ ] Validaciones
+### Fase 8: Polish y Deployment ⏳ SIGUIENTE
+- [x] Manejo de errores básico
+- [x] Loading states
+- [x] Notificaciones toast
+- [ ] Validación avanzada de formularios
 - [ ] Deploy a Vercel
-- [ ] Testing
+- [ ] Testing automatizado
 
 ## 🗄️ Base de Datos
 
@@ -187,22 +195,83 @@ Todas las tablas tienen Row Level Security habilitado:
 
 ## 🎨 Componentes UI
 
-Componentes de shadcn/ui implementados:
-- Button
-- Input
-- Label
-- Card (CardHeader, CardTitle, CardDescription, CardContent, CardFooter)
-- Toaster (notificaciones con Sonner)
+Todos los componentes migrados a CSS Modules:
+- **Button** - Variantes: default, destructive, outline, secondary, ghost, link
+- **Input** - Inputs de formulario estilizados
+- **Label** - Labels accesibles
+- **Card** - Cards con Header, Title, Description, Content, Footer
+- **Dialog** - Modales accesibles
+- **Select** - Selectores personalizados
+- **Textarea** - Áreas de texto
+- **Switch** - Toggles on/off
+- **Tabs** - Pestañas de navegación
+- **Avatar** - Avatares de usuario
+- **Sheet** - Paneles laterales (mobile nav)
+- **Separator** - Separadores visuales
+- **Toaster** - Notificaciones con Sonner
+
+## 🎨 Sistema de Estilos
+
+### Migración de Tailwind a CSS Modules
+
+El proyecto ha sido completamente migrado de Tailwind CSS a CSS Modules para:
+- ✅ Mejor control sobre estilos
+- ✅ Eliminación de dependencias no utilizadas
+- ✅ Mejor rendimiento
+- ✅ Estilos más mantenibles
+
+### Variables CSS Globales
+
+Ubicadas en `src/styles/variables.css`:
+- Colores del tema (primarios, secundarios, backgrounds)
+- Tamaños de texto
+- Espaciados
+- Radios de bordes
+- Sombras
+- Transiciones
+
+### Utilidades Disponibles
+
+El archivo `globals.css` incluye clases utilitarias para:
+- Flexbox y Grid
+- Espaciado (margin, padding, gap)
+- Tamaños de texto
+- Colores
+- Efectos (hover, transiciones, sombras)
+- Responsive design
+
+## 🧭 Generación de Íconos PWA
+
+Para generar los íconos de la PWA:
+
+1. Abre el archivo `scripts/generate-icons.html` en tu navegador
+2. Click en "Generate Icons"
+3. Los íconos se descargarán automáticamente
+4. Mueve los archivos PNG a `public/icons/`
+
+Tamaños generados: 72x72, 96x96, 128x128, 144x144, 152x152, 192x192, 384x384, 512x512
 
 ## 🚧 Próximos Pasos Inmediatos
 
-1. **Ejecutar las migraciones SQL** en Supabase (si no lo has hecho)
-2. **Probar el flujo de autenticación**:
-   - Ir a `/register` y crear una cuenta
-   - Verificar que te redirige al dashboard
-   - Probar logout
-   - Volver a hacer login
-3. **Continuar con Fase 3**: Mejorar el dashboard y navegación
+1. **Generar íconos PWA**:
+   - Abrir `scripts/generate-icons.html` en el navegador
+   - Click en "Generate Icons"
+   - Mover archivos PNG a `public/icons/`
+
+2. **Completar UI de Equipos**:
+   - Implementar formulario de creación de equipos
+   - Sistema de invitaciones
+   - Gestión de roles y permisos
+
+3. **Optimizaciones**:
+   - Agregar validación avanzada en formularios
+   - Mejorar manejo de errores
+   - Implementar tests
+
+4. **Deploy**:
+   - Configurar Vercel
+   - Variables de entorno en producción
+   - Dominio personalizado (opcional)
 
 ## 📝 Notas Importantes
 
@@ -226,7 +295,39 @@ Si tienes problemas:
 3. Revisa la consola del navegador para errores
 4. Verifica que el servidor de desarrollo esté corriendo en el puerto correcto
 
+## 🎯 Características Implementadas
+
+- ✅ **Autenticación completa** con registro, login y logout
+- ✅ **Dashboard** con resumen de actividades
+- ✅ **Calendario interactivo** con vistas mes/semana/día
+- ✅ **Gestión de eventos** con CRUD completo y tiempo real
+- ✅ **Sistema de tareas** con prioridades y filtros
+- ✅ **Navegación responsive** desktop y mobile
+- ✅ **PWA instalable** con manifest y íconos
+- ✅ **Tema oscuro** optimizado para Notion-style
+- ✅ **Real-time** updates con Supabase
+- ✅ **Notificaciones** toast con Sonner
+
+## 🔧 Comandos Útiles
+
+```bash
+# Desarrollo
+npm run dev              # Iniciar servidor de desarrollo
+
+# Build
+npm run build            # Construir para producción
+npm start                # Iniciar servidor de producción
+
+# Linting
+npm run lint             # Ejecutar ESLint
+```
+
+## 📸 Screenshots
+
+> Agrega screenshots aquí cuando el proyecto esté listo
+
 ---
 
-**Estado**: En desarrollo activo - Fase 2 completada ✅
-**Última actualización**: 2025-11-14
+**Estado**: MVP Funcional - Fases 1-5 y 7 completadas ✅
+**Última actualización**: 2025-11-15
+**Versión**: 1.0.0

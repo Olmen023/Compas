@@ -5,15 +5,12 @@ export type Task = Database["public"]["Tables"]["tasks"]["Row"];
 export type TaskInsert = Database["public"]["Tables"]["tasks"]["Insert"];
 export type TaskUpdate = Database["public"]["Tables"]["tasks"]["Update"];
 
-// Get all tasks for a user
+// Get all tasks for a user usando RPC (evita recursión RLS)
 export async function getTasks(userId: string): Promise<Task[]> {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("tasks")
-    .select("*")
-    .or(`created_by.eq.${userId},assigned_to.eq.${userId}`)
-    .order("created_at", { ascending: false });
+    .rpc("get_user_tasks", { p_user_id: userId });
 
   if (error) {
     console.error("Error fetching tasks:", error);
@@ -41,14 +38,21 @@ export async function getTasksByTeam(teamId: string): Promise<Task[]> {
   return data || [];
 }
 
-// Create a new task
+// Create a new task usando RPC (evita problemas con RLS)
 export async function createTask(task: TaskInsert): Promise<Task> {
   const supabase = createClient();
 
-  const { data, error } = await supabase
-    .from("tasks")
-    .insert(task)
-    .select()
+  const { data, error} = await supabase
+    .rpc("create_task", {
+      p_title: task.title,
+      p_description: task.description || null,
+      p_status: task.status || "todo",
+      p_priority: task.priority || "medium",
+      p_due_date: task.due_date || null,
+      p_team_id: task.team_id || null,
+      p_assigned_to: task.assigned_to || null,
+      p_created_by: task.created_by,
+    })
     .single();
 
   if (error) {

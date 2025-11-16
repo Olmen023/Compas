@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Loader2, Shield, Key } from "lucide-react";
+import styles from "./SecuritySettings.module.css";
 
 interface SecuritySettingsProps {
   user: any;
@@ -57,12 +58,12 @@ export function SecuritySettings({ user }: SecuritySettingsProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className={styles.container}>
       {/* Cambiar contraseña */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center">
-            <Key className="h-5 w-5 mr-2" />
+          <CardTitle className={styles.cardTitle}>
+            <Key className={styles.cardTitleIcon} />
             Cambiar Contraseña
           </CardTitle>
           <CardDescription>
@@ -70,8 +71,8 @@ export function SecuritySettings({ user }: SecuritySettingsProps) {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleChangePassword} className="space-y-4">
-            <div className="space-y-2">
+          <form onSubmit={handleChangePassword} className={styles.form}>
+            <div className={styles.formField}>
               <Label htmlFor="current-password">Contraseña actual</Label>
               <Input
                 id="current-password"
@@ -81,12 +82,12 @@ export function SecuritySettings({ user }: SecuritySettingsProps) {
                 placeholder="Ingresa tu contraseña actual"
                 disabled
               />
-              <p className="text-xs text-gray-400">
+              <p className={styles.fieldHint}>
                 (Verificación deshabilitada temporalmente)
               </p>
             </div>
 
-            <div className="space-y-2">
+            <div className={styles.formField}>
               <Label htmlFor="new-password">Nueva contraseña</Label>
               <Input
                 id="new-password"
@@ -97,12 +98,12 @@ export function SecuritySettings({ user }: SecuritySettingsProps) {
                 required
                 minLength={6}
               />
-              <p className="text-xs text-gray-500">
+              <p className={styles.fieldHint}>
                 Mínimo 6 caracteres
               </p>
             </div>
 
-            <div className="space-y-2">
+            <div className={styles.formField}>
               <Label htmlFor="confirm-password">Confirmar nueva contraseña</Label>
               <Input
                 id="confirm-password"
@@ -115,9 +116,9 @@ export function SecuritySettings({ user }: SecuritySettingsProps) {
               />
             </div>
 
-            <div className="flex justify-end pt-4">
+            <div className={styles.formActions}>
               <Button type="submit" disabled={isLoading}>
-                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {isLoading && <Loader2 className={styles.loadingIcon} />}
                 Cambiar contraseña
               </Button>
             </div>
@@ -128,29 +129,29 @@ export function SecuritySettings({ user }: SecuritySettingsProps) {
       {/* Información de seguridad */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center">
-            <Shield className="h-5 w-5 mr-2" />
+          <CardTitle className={styles.cardTitle}>
+            <Shield className={styles.cardTitleIcon} />
             Información de Cuenta
           </CardTitle>
           <CardDescription>
             Detalles sobre tu cuenta y seguridad
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex justify-between items-center py-3 border-b">
+        <CardContent className={styles.infoSection}>
+          <div className={styles.infoRow}>
             <div>
-              <p className="font-medium text-sm">Email</p>
-              <p className="text-sm text-gray-600">{user.email}</p>
+              <p className={styles.infoLabel}>Email</p>
+              <p className={styles.infoValue}>{user.email}</p>
             </div>
-            <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
+            <span className={styles.badge}>
               Verificado
             </span>
           </div>
 
-          <div className="flex justify-between items-center py-3 border-b">
+          <div className={styles.infoRow}>
             <div>
-              <p className="font-medium text-sm">Cuenta creada</p>
-              <p className="text-sm text-gray-600">
+              <p className={styles.infoLabel}>Cuenta creada</p>
+              <p className={styles.infoValue}>
                 {new Date(user.created_at).toLocaleDateString("es-ES", {
                   year: "numeric",
                   month: "long",
@@ -160,10 +161,10 @@ export function SecuritySettings({ user }: SecuritySettingsProps) {
             </div>
           </div>
 
-          <div className="flex justify-between items-center py-3">
+          <div className={styles.infoRow}>
             <div>
-              <p className="font-medium text-sm">Última actualización</p>
-              <p className="text-sm text-gray-600">
+              <p className={styles.infoLabel}>Última actualización</p>
+              <p className={styles.infoValue}>
                 {new Date(user.updated_at).toLocaleDateString("es-ES", {
                   year: "numeric",
                   month: "long",
@@ -176,18 +177,18 @@ export function SecuritySettings({ user }: SecuritySettingsProps) {
       </Card>
 
       {/* Zona de peligro */}
-      <Card className="border-red-200">
+      <Card className={styles.dangerZone}>
         <CardHeader>
-          <CardTitle className="text-red-600">Zona de Peligro</CardTitle>
+          <CardTitle className={styles.dangerTitle}>Zona de Peligro</CardTitle>
           <CardDescription>
             Acciones irreversibles con tu cuenta
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-between">
+          <div className={styles.dangerContent}>
             <div>
-              <p className="font-medium text-sm">Eliminar cuenta</p>
-              <p className="text-sm text-gray-600">
+              <p className={styles.dangerLabel}>Eliminar cuenta</p>
+              <p className={styles.dangerDescription}>
                 Elimina permanentemente tu cuenta y todos tus datos
               </p>
             </div>
@@ -195,7 +196,7 @@ export function SecuritySettings({ user }: SecuritySettingsProps) {
               Eliminar
             </Button>
           </div>
-          <p className="text-xs text-gray-400 mt-2">
+          <p className={styles.dangerHint}>
             (Funcionalidad próximamente)
           </p>
         </CardContent>

@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { TasksView } from "@/components/tasks/TasksView";
+import { TasksTabs } from "@/components/tasks/TasksTabs";
 
 export default async function TasksPage() {
   const supabase = await createClient();
@@ -22,15 +22,15 @@ export default async function TasksPage() {
   const teams = teamMemberships?.map((tm: any) => tm.teams) || [];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-7xl mx-auto px-8 py-8">
       <div>
         <h1 className="text-2xl font-semibold text-foreground">Tareas</h1>
         <p className="text-muted-foreground mt-1 text-sm">
-          Organiza y gestiona tus tareas pendientes
+          Gestiona tus tareas personales y las de tu equipo
         </p>
       </div>
 
-      <TasksView userId={user.id} teams={teams} />
+      <TasksTabs userId={user.id} teams={teams} />
     </div>
   );
 }

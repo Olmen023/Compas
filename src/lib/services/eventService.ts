@@ -22,33 +22,101 @@ export async function getUserEvents(userId: string): Promise<CalendarEvent[]> {
     return []; // Retornar array vacío si no hay autenticación
   }
 
+  console.log("🔍 Fetching events for user:", userId);
+
+  // Usar RPC para evitar problemas con RLS
   const { data, error } = await supabase
-    .from("events")
-    .select(`
-      *,
-      teams (
-        name
-      )
-    `)
-    .or(`created_by.eq.${userId},team_id.in.(select team_id from team_members where user_id = '${userId}')`)
-    .order("start_time", { ascending: true });
+    .rpc("get_user_events", { p_user_id: userId });
 
   if (error) {
-    console.error("Error fetching events:", {
+    console.error("❌ Error fetching events with RPC:", {
       message: error.message,
       details: error.details,
       hint: error.hint,
       code: error.code
     });
-    // No lanzar error, retornar array vacío
-    return [];
+
+    // Si la función RPC no existe, intentar con query directa simplificada
+    console.log("⚠️ RPC function not found, trying direct query...");
+
+    // Query simplificada sin joins - primero obtener los eventos
+    console.log("📊 Trying simplified query without joins...");
+
+    // Obtener eventos creados por el usuario (sin join a teams)
+    const { data: ownEvents, error: ownError } = await supabase
+      .from("events")
+      .select("*")
+      .eq("created_by", userId)
+      .order("start_time", { ascending: true });
+
+    if (ownError) {
+      console.error("❌ Error loading own events:", ownError);
+      console.log("⚠️ This is likely an RLS policy issue. Execute supabase-setup-completo.sql!");
+    }
+
+    console.log("📊 Own events loaded:", ownEvents?.length || 0);
+
+    // Obtener los equipos del usuario
+    const { data: userTeams } = await supabase
+      .from("team_members")
+      .select("team_id")
+      .eq("user_id", userId);
+
+    const teamIds = userTeams?.map(tm => tm.team_id) || [];
+    console.log("📊 User teams:", teamIds.length);
+
+    let teamEvents: any[] = [];
+    if (teamIds.length > 0) {
+      // Obtener eventos de equipos (sin join a teams)
+      const { data: teamEventsData, error: teamError } = await supabase
+        .from("events")
+        .select("*")
+        .in("team_id", teamIds)
+        .order("start_time", { ascending: true });
+
+      if (teamError) {
+        console.error("❌ Error loading team events:", teamError);
+        console.log("⚠️ This is likely an RLS policy issue. Execute supabase-setup-completo.sql!");
+      } else {
+        teamEvents = teamEventsData || [];
+        console.log("📊 Team events loaded:", teamEvents.length);
+      }
+    }
+
+    // Combinar eventos propios y de equipo, eliminar duplicados
+    const allEvents = [...(ownEvents || []), ...teamEvents];
+    const uniqueEvents = Array.from(
+      new Map(allEvents.map(event => [event.id, event])).values()
+    );
+
+    console.log("✅ Events loaded with simplified query:", uniqueEvents.length);
+
+    // Ahora cargar los nombres de los equipos para los eventos que tienen team_id
+    const eventsWithTeamIds = uniqueEvents.filter(e => e.team_id);
+    const uniqueTeamIds = [...new Set(eventsWithTeamIds.map(e => e.team_id))];
+
+    let teamNamesMap: Record<string, string> = {};
+    if (uniqueTeamIds.length > 0) {
+      const { data: teamsData } = await supabase
+        .from("teams")
+        .select("id, name")
+        .in("id", uniqueTeamIds);
+
+      if (teamsData) {
+        teamNamesMap = Object.fromEntries(
+          teamsData.map(t => [t.id, t.name])
+        );
+      }
+    }
+
+    return uniqueEvents.map((event: any) => ({
+      ...event,
+      team_name: event.team_id ? teamNamesMap[event.team_id] : undefined,
+    }));
   }
 
-  // Mapear los datos para incluir el nombre del equipo
-  return data?.map((event: any) => ({
-    ...event,
-    team_name: event.teams?.name,
-  })) || [];
+  console.log("✅ Events loaded with RPC:", data?.length || 0);
+  return data || [];
 }
 
 /**
@@ -59,17 +127,42 @@ export async function createEvent(
 ): Promise<Event> {
   const supabase = createClient();
 
+  console.log("📝 Creating event:", eventData);
+
+  // Usar RPC para evitar problemas con RLS
   const { data, error } = await supabase
-    .from("events")
-    .insert(eventData)
-    .select()
+    .rpc("create_event", {
+      p_title: eventData.title,
+      p_description: eventData.description || null,
+      p_start_time: eventData.start_time,
+      p_end_time: eventData.end_time,
+      p_all_day: eventData.all_day || false,
+      p_team_id: eventData.team_id || null,
+      p_created_by: eventData.created_by,
+    })
     .single();
 
   if (error) {
-    console.error("Error creating event:", error);
-    throw error;
+    console.error("❌ Error creating event with RPC:", error);
+
+    // Si la función RPC no existe, intentar con insert directo
+    console.log("⚠️ RPC function not found, trying direct insert...");
+    const { data: directData, error: directError } = await supabase
+      .from("events")
+      .insert(eventData)
+      .select()
+      .single();
+
+    if (directError) {
+      console.error("❌ Error with direct insert too:", directError);
+      throw directError;
+    }
+
+    console.log("✅ Event created with direct insert:", directData);
+    return directData;
   }
 
+  console.log("✅ Event created with RPC:", data);
   return data;
 }
 
@@ -82,18 +175,43 @@ export async function updateEvent(
 ): Promise<Event> {
   const supabase = createClient();
 
+  console.log("📝 Updating event:", eventId, eventData);
+
+  // Usar RPC para evitar problemas con RLS
   const { data, error } = await supabase
-    .from("events")
-    .update(eventData)
-    .eq("id", eventId)
-    .select()
+    .rpc("update_event", {
+      p_event_id: eventId,
+      p_title: eventData.title || "",
+      p_description: eventData.description || null,
+      p_start_time: eventData.start_time || new Date().toISOString(),
+      p_end_time: eventData.end_time || new Date().toISOString(),
+      p_all_day: eventData.all_day || false,
+      p_team_id: eventData.team_id || null,
+    })
     .single();
 
   if (error) {
-    console.error("Error updating event:", error);
-    throw error;
+    console.error("❌ Error updating event with RPC:", error);
+
+    // Si la función RPC no existe, intentar con update directo
+    console.log("⚠️ RPC function not found, trying direct update...");
+    const { data: directData, error: directError } = await supabase
+      .from("events")
+      .update(eventData)
+      .eq("id", eventId)
+      .select()
+      .single();
+
+    if (directError) {
+      console.error("❌ Error with direct update too:", directError);
+      throw directError;
+    }
+
+    console.log("✅ Event updated with direct update:", directData);
+    return directData;
   }
 
+  console.log("✅ Event updated with RPC:", data);
   return data;
 }
 
@@ -103,15 +221,34 @@ export async function updateEvent(
 export async function deleteEvent(eventId: string): Promise<void> {
   const supabase = createClient();
 
+  console.log("🗑️ Deleting event:", eventId);
+
+  // Usar RPC para evitar problemas con RLS
   const { error } = await supabase
-    .from("events")
-    .delete()
-    .eq("id", eventId);
+    .rpc("delete_event", {
+      p_event_id: eventId,
+    });
 
   if (error) {
-    console.error("Error deleting event:", error);
-    throw error;
+    console.error("❌ Error deleting event with RPC:", error);
+
+    // Si la función RPC no existe, intentar con delete directo
+    console.log("⚠️ RPC function not found, trying direct delete...");
+    const { error: directError } = await supabase
+      .from("events")
+      .delete()
+      .eq("id", eventId);
+
+    if (directError) {
+      console.error("❌ Error with direct delete too:", directError);
+      throw directError;
+    }
+
+    console.log("✅ Event deleted with direct delete");
+    return;
   }
+
+  console.log("✅ Event deleted with RPC");
 }
 
 /**

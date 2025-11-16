@@ -231,12 +231,12 @@ export function TaskDialog({
           {teams.length > 0 && (
             <div className="space-y-2">
               <Label htmlFor="team">Equipo (opcional)</Label>
-              <Select value={teamId} onValueChange={setTeamId}>
+              <Select value={teamId || "personal"} onValueChange={(value) => setTeamId(value === "personal" ? "" : value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Solo para mí" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Solo para mí</SelectItem>
+                  <SelectItem value="personal">Solo para mí</SelectItem>
                   {teams.map((team) => (
                     <SelectItem key={team.id} value={team.id}>
                       {team.name}

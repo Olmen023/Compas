@@ -1,0 +1,295 @@
+/* Calendar View Styles - Improved contrast and readability */
+
+/* Main Calendar Container */
+.calendar-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* Calendar grid cells */
+.rbc-calendar {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+}
+
+/* Header - Month/Week navigation */
+.rbc-toolbar {
+  padding: var(--spacing-lg);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rbc-toolbar button {
+  color: var(--color-text-primary);
+  font-weight: var(--font-medium);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  transition: all var(--transition-fast);
+}
+
+.rbc-toolbar button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.rbc-toolbar button:active,
+.rbc-toolbar button.rbc-active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+.rbc-toolbar-label {
+  color: var(--color-text-primary);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-lg);
+}
+
+/* Day of week headers */
+.rbc-header {
+  padding: var(--spacing-md);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  background: var(--color-bg-secondary);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Date cells */
+.rbc-date-cell {
+  padding: var(--spacing-sm);
+  text-align: right;
+}
+
+.rbc-date-cell a {
+  color: var(--color-text-primary);
+  font-weight: var(--font-medium);
+  font-size: var(--text-base);
+}
+
+/* Today's date */
+.rbc-today {
+  background-color: rgba(0, 144, 255, 0.1) !important;
+}
+
+.rbc-today .rbc-date-cell a {
+  color: var(--color-primary);
+  font-weight: var(--font-bold);
+}
+
+/* Off-range dates (dates from other months) */
+.rbc-off-range {
+  color: var(--color-text-tertiary);
+}
+
+.rbc-off-range .rbc-date-cell a {
+  color: var(--color-text-tertiary);
+  opacity: 0.5;
+}
+
+.rbc-off-range-bg {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Calendar cells */
+.rbc-day-bg {
+  border-color: rgba(255, 255, 255, 0.08);
+  transition: background var(--transition-fast);
+}
+
+.rbc-day-bg:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Time slots */
+.rbc-time-slot {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--color-text-secondary);
+}
+
+.rbc-time-header-content {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.rbc-time-content {
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.rbc-day-slot .rbc-time-slot {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Events */
+.rbc-event {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.rbc-event:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.rbc-event.rbc-selected {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+/* Event labels with better contrast */
+.rbc-event-label {
+  font-size: var(--text-xs);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: var(--font-medium);
+}
+
+.rbc-event-content {
+  color: white;
+  font-weight: var(--font-medium);
+}
+
+/* Month view specific */
+.rbc-month-view {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-bg-secondary);
+}
+
+.rbc-month-row {
+  border-color: rgba(255, 255, 255, 0.08);
+  overflow: visible;
+}
+
+/* Week view specific */
+.rbc-time-view {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-bg-secondary);
+}
+
+.rbc-time-header {
+  background: var(--color-bg-secondary);
+}
+
+.rbc-time-header-gutter {
+  background: var(--color-bg-secondary);
+}
+
+.rbc-timeslot-group {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 40px;
+}
+
+.rbc-current-time-indicator {
+  background-color: var(--color-primary);
+  height: 2px;
+}
+
+/* Agenda view specific */
+.rbc-agenda-view {
+  background: var(--color-bg-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.rbc-agenda-view table {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.rbc-agenda-view table.rbc-agenda-table thead > tr > th {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  font-weight: var(--font-semibold);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  padding: var(--spacing-md);
+}
+
+.rbc-agenda-view table.rbc-agenda-table tbody > tr > td {
+  padding: var(--spacing-md);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-primary);
+}
+
+.rbc-agenda-view table.rbc-agenda-table tbody > tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.rbc-agenda-date-cell {
+  color: var(--color-text-primary);
+  font-weight: var(--font-semibold);
+}
+
+.rbc-agenda-time-cell {
+  color: var(--color-text-secondary);
+}
+
+.rbc-agenda-event-cell {
+  color: var(--color-text-primary);
+}
+
+/* Show more link */
+.rbc-show-more {
+  background-color: rgba(0, 144, 255, 0.15);
+  color: var(--color-primary);
+  font-weight: var(--font-medium);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  margin: var(--spacing-xs) 0;
+}
+
+.rbc-show-more:hover {
+  background-color: rgba(0, 144, 255, 0.25);
+}
+
+/* Overlay */
+.rbc-overlay {
+  background: var(--color-bg-tertiary);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2xl);
+  padding: var(--spacing-md);
+  backdrop-filter: blur(20px);
+}
+
+.rbc-overlay-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-primary);
+  font-weight: var(--font-semibold);
+}
+
+/* Scrollbar styling */
+.rbc-time-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.rbc-time-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+}
+
+.rbc-time-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+}
+
+.rbc-time-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

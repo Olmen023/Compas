@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.settingsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.settingLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.settingDescription {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.actionsRow {
+  display: flex;
+  justify-content: flex-end;
+}

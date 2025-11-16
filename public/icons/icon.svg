@@ -1,0 +1,27 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <rect width="512" height="512" rx="115" fill="#0090FF"/>
+
+  <!-- Compass icon -->
+  <g transform="translate(128, 128)">
+    <!-- Outer circle -->
+    <circle cx="128" cy="128" r="120" fill="none" stroke="white" stroke-width="12"/>
+
+    <!-- Inner circle -->
+    <circle cx="128" cy="128" r="20" fill="white"/>
+
+    <!-- North arrow -->
+    <path d="M 128 30 L 100 128 L 128 128 Z" fill="white"/>
+    <path d="M 128 30 L 156 128 L 128 128 Z" fill="#4ECDC4"/>
+
+    <!-- South arrow -->
+    <path d="M 128 226 L 100 128 L 128 128 Z" fill="white"/>
+    <path d="M 128 226 L 156 128 L 128 128 Z" fill="#4ECDC4"/>
+
+    <!-- Cardinal points -->
+    <text x="128" y="20" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">N</text>
+    <text x="246" y="138" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">E</text>
+    <text x="128" y="252" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">S</text>
+    <text x="10" y="138" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">W</text>
+  </g>
+</svg>
