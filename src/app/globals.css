@@ -5,6 +5,16 @@
 /* Import variables */
 @import '../styles/variables.css';
 
+/* ===== CSS VARIABLES FOR COMPONENTS ===== */
+:root {
+  --primary: 210 100% 50%; /* hsl for #0090FF */
+  --primary-foreground: 0 0% 100%; /* white */
+  --destructive: 0 84% 60%; /* hsl for #EF4444 */
+  --destructive-foreground: 0 0% 100%; /* white */
+  --foreground: 0 0% 90%; /* #E5E5E5 */
+  --muted-foreground: 0 0% 60%; /* #999999 */
+}
+
 /* ===== RESET & BASE STYLES ===== */
 *,
 *::before,
@@ -148,22 +158,34 @@ a:hover {
 
 /* ===== WIDTH & HEIGHT ===== */
 .w-4 { width: 1rem; }
+.w-5 { width: 1.25rem; }
 .w-6 { width: 1.5rem; }
 .w-8 { width: 2rem; }
 .w-12 { width: 3rem; }
 .w-16 { width: 4rem; }
 .w-64 { width: 16rem; }
 .w-full { width: 100%; }
+.w-fit { width: fit-content; }
 .h-4 { width: 1rem; height: 1rem; }
+.h-5 { height: 1.25rem; }
 .h-6 { width: 1.5rem; height: 1.5rem; }
 .h-8 { width: 2rem; height: 2rem; }
 .h-12 { width: 3rem; height: 3rem; }
 .h-16 { width: 4rem; height: 4rem; }
+.h-full { height: 100%; }
 .h-screen { height: 100vh; }
+.h-\[300px\] { height: 300px; }
+.h-\[280px\] { height: 280px; }
 .max-w-7xl { max-width: 80rem; }
 .max-w-md { max-width: 28rem; }
 .min-h-0 { min-height: 0; }
+.min-h-screen { min-height: 100vh; }
+.min-w-0 { min-width: 0; }
 .mx-auto { margin-left: auto; margin-right: auto; }
+.overflow-x-auto { overflow-x: auto; }
+.overflow-y-auto { overflow-y: auto; }
+.overflow-hidden { overflow: hidden; }
+.object-cover { object-fit: cover; }
 
 /* ===== SPECIFIC SIZES ===== */
 .h-3\.5 { height: 0.875rem; }
@@ -252,8 +274,20 @@ a:hover {
 .p-1 { padding: var(--spacing-xs); }
 .p-6 { padding: var(--spacing-2xl); }
 .rounded-xl { border-radius: var(--radius-xl); }
+
+/* ===== Z-INDEX ===== */
+.z-10 { z-index: 10; }
+.z-20 { z-index: 20; }
+.z-50 { z-index: 50; }
+
+/* ===== OPACITY ===== */
+.opacity-50 { opacity: 0.5; }
+.opacity-100 { opacity: 1; }
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow { box-shadow: var(--shadow-md); }
 .shadow-lg { box-shadow: var(--shadow-lg); }
 .shadow-xl { box-shadow: var(--shadow-xl); }
+.shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
 .shadow-md { box-shadow: var(--shadow-md); }
 .shadow-inner { box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06); }
 
@@ -262,6 +296,20 @@ a:hover {
 .bg-muted\/50 { background-color: rgba(40, 42, 46, 0.5); }
 .bg-white { background-color: #ffffff; }
 .bg-primary-50 { background-color: rgba(0, 144, 255, 0.05); }
+
+/* ===== ANIMATED SPIN ===== */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
 
 /* ===== GRADIENT BACKGROUNDS ===== */
 .bg-gradient-to-br {
