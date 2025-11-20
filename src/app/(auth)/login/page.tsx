@@ -119,7 +119,8 @@ export default function LoginPage() {
             <CardFooter className="flex flex-col space-y-4 px-6 pb-6">
               <Button
                 type="submit"
-                className="w-full h-12 text-lg font-semibold transform hover:scale-105 transition-all duration-300"
+                size="lg"
+                className="w-full text-lg font-semibold transform hover:scale-105 transition-all duration-300"
                 style={{
                   background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))',
                   color: 'white',
@@ -149,7 +150,7 @@ export default function LoginPage() {
 
               <Link
                 href="/register"
-                className="w-full h-12 flex items-center justify-center px-4 rounded-lg font-semibold transform hover:scale-105 transition-all duration-300"
+                className="w-full flex items-center justify-center px-8 py-4 rounded-lg font-semibold transform hover:scale-105 transition-all duration-300 text-base"
                 style={{
                   border: '2px solid rgba(0, 144, 255, 0.5)',
                   color: 'var(--color-primary)',
