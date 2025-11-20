@@ -50,6 +50,7 @@ lerna-debug.log*
 .claude2
 
 # Claude Code - Archivos sensibles y de configuración
+.claude
 .claude/
 .claude/*
 *.local.json
